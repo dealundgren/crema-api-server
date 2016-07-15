@@ -5,7 +5,10 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start:dev": "NODE_ENV=development npm start",
+    "test": "NODE_ENV=test npm run test:unit && npm run test:integration",
+    "test:unit": "mocha --reporter nyan ./**/*.spec.js",
+    "test:integration": "mocha --reporter nyan ./**/*.integration.js"
   },
   "repository": {
     "type": "git",
@@ -30,5 +33,11 @@
     "pg": "^6.0.2",
     "pg-hstore": "^2.3.2",
     "sequelize": "^3.23.4"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^2.5.3",
+    "sinon": "^1.17.4",
+    "supertest": "^1.2.0"
   }
 }
