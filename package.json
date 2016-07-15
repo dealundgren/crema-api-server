@@ -1,0 +1,28 @@
+{
+  "name": "crema-api-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Political-Tambourine/crema-api-server.git"
+  },
+  "author": "",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/Political-Tambourine/crema-api-server/issues"
+  },
+  "homepage": "https://github.com/Political-Tambourine/crema-api-server#readme",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0",
+    "morgan": "^1.7.0",
+    "pg": "^6.0.2",
+    "pg-hstore": "^2.3.2",
+    "sequelize": "^3.23.4"
+  }
+}
