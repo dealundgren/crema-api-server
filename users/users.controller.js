@@ -1,12 +1,14 @@
-const User = require('./user.model');
-
 module.exports = {
-  getOne
+  getCurrentUser
 };
 
 /***** PUBLIC *****/
 
-function getOne(req, res) {
-  
+function getCurrentUser(req, res) {
+  if (req.user) {
+    res.send(req.user);
+  } else {
+    res.status(401).send({message: 'user is not authenticated'});
+  }
 }
 

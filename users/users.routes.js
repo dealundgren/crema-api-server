@@ -1,8 +1,8 @@
 const UserRouter = require('express').Router();
 const UserCtrl = require('./users.controller');
 
-UserRouter.route('/:id')
-	.get(UserCtrl.getOne);
+UserRouter.route('/currentuser')
+	.get(UserCtrl.getCurrentUser);
 
 
 module.exports = UserRouter;
