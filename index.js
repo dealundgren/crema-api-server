@@ -3,8 +3,8 @@ const config = require('./config/config');
 
 const app = express();
 
-require('./config/sequelize')(config);
-require('./config/middleware')(app);
+require('./config/sequelize');
+require('./config/middleware')(app, config);
 require('./config/routes')(app);
 
 
