@@ -8,5 +8,6 @@ require('./config/passport');
 require('./config/middleware')(app, config);
 require('./config/routes')(app);
 
-
 app.listen(config.port, () => console.log(`Listening on ${config.port}...`));
+
+module.exports = app;
