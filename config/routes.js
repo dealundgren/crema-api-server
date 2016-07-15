@@ -1,3 +1,5 @@
+const UserRouter = require('../users/users.route');
+
 module.exports = (app) => {
-  app.get('/', (req, res) => res.send('hello'));
+  app.use('/v1/users', UserRouter);
 };
