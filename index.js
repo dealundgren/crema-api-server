@@ -4,6 +4,7 @@ const config = require('./config/config');
 const app = express();
 
 require('./config/sequelize');
+require('./config/passport');
 require('./config/middleware')(app, config);
 require('./config/routes')(app);
 
