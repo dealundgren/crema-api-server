@@ -1,21 +1,17 @@
 const Sequelize = require('sequelize');
 const sequelize = require('../config/sequelize');
+const Shop = require('../shops/shops.model.js')
+const User = require('../users/user.model.js')
+
 
 const Metric = sequelize.define('metric', {
-  name: { type: Sequelize.STRING, allowNull: false },
-  lat: { type: Sequelize.FLOAT, allowNull: false },
-  long: { type: Sequelize.FLOAT, allowNull: false },
-  description: { type: Sequelize.STRING },
-  openHours: { type: Sequelize.STRING },
-  price: { type: Sequelize.ENUM('$', '$$', '$$$', '$$$$')},
-  wifi: { type: Sequelize.BOOLEAN },
-  address: { type: Sequelize.STRING },
-  telephone: { type: Sequelize.STRING },
-  rating: { type: Sequelize.FLOAT },
-  website: { type: Sequelize.STRING },
-  photos: { type: Sequelize.ARRAY(Sequelize.STRING) }
+  availRating: { type: Sequelize.FLOAT },
+  userMessage: { type: Sequelize.STRING }
 });
 
+
+Metric.belongsTo(Shop);
+Metric.belongsTo(User);
 Metric.sync();
 
 module.exports = Metric;
