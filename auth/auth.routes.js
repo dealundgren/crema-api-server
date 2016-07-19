@@ -1,0 +1,1 @@
+// Receive login, logout, and sign up routes, and call appropriate auth functions.
