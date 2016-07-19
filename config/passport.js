@@ -22,7 +22,7 @@ passport.use(new LocalStrategy((username, password, done) => {
     });
 }));
 
-// Add user info to cookie and store this info on req.user
+// Add user ID to cookie and store cookie-ID relationship
 passport.serializeUser((user, done) => {
   done(null, user.id);
 });

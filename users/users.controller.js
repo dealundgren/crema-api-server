@@ -12,3 +12,13 @@ function getCurrentUser(req, res) {
   }
 }
 
+function createUser(req, res) {
+  return User.create({
+    username: req.body.username,
+    password: req.body.password,
+    fullName: req.body.fullName,
+    email: req.body.email || null
+    // handle role type here someday
+  });
+}
+

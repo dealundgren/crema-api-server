@@ -11,7 +11,7 @@ module.exports = {
 
 function hashPassword(password) {
   return bcrypt.genSaltAsync(10)
-    .then(salt => bcrypt.hashAsyc(password, salt));
+    .then(salt => bcrypt.hashAsync(password, salt));
 }
 
 function comparePassword(password, hashedPassword) {
