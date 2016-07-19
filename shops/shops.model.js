@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 const sequelize = require('../config/sequelize');
 
-const Shop = sequelize.define('shop', {
+var Shop = sequelize.define('shop', {
   name: { type: Sequelize.STRING, allowNull: false },
   lat: { type: Sequelize.FLOAT, allowNull: false },
   long: { type: Sequelize.FLOAT, allowNull: false },
@@ -16,6 +16,6 @@ const Shop = sequelize.define('shop', {
   photos: { type: Sequelize.ARRAY(Sequelize.STRING) }
 });
 
-Shop.sync();
+Shop.sync({ force: true });
 
 module.exports = Shop;

@@ -1,17 +1,21 @@
 const Sequelize = require('sequelize');
 const sequelize = require('../config/sequelize');
-const Shop = require('../shops/shops.model.js')
-const User = require('../users/user.model.js')
+var Shop = require('../shops/shops.model.js');
+var User = require('../users/user.model.js');
 
 
-const Metric = sequelize.define('metric', {
+var Metric = sequelize.define('metric', {
   availRating: { type: Sequelize.FLOAT },
-  userMessage: { type: Sequelize.STRING }
+  userMessage: { type: Sequelize.STRING },
+  userID: { type: Sequelize.INTEGER },
+  shopID: { type: Sequelize.INTEGER }
 });
 
 
-Metric.belongsTo(Shop);
-Metric.belongsTo(User);
-Metric.sync();
+Metric.sync({ force: true });
+// User.hasMany(Metric, { foreignKey: 'userID' });
+// Shop.hasMany(Metric, { foreignKey: 'shopID '});
+// Metric.belongsTo(Shop, { foreignKey: 'shopID' });
+// Metric.belongsTo(User, { foreignKey: 'userID' });
 
 module.exports = Metric;
