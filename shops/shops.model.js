@@ -13,7 +13,8 @@ var Shop = sequelize.define('shop', {
   telephone: { type: Sequelize.STRING },
   rating: { type: Sequelize.FLOAT },
   website: { type: Sequelize.STRING },
-  photos: { type: Sequelize.ARRAY(Sequelize.STRING) }
+  photos: { type: Sequelize.ARRAY(Sequelize.STRING) },
+  googleid: { type: Sequelize.STRING, unique: true}
 });
 
 Shop.sync();
