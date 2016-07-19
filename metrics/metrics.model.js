@@ -12,10 +12,10 @@ var Metric = sequelize.define('metric', {
 });
 
 
-Metric.sync({ force: true });
-// User.hasMany(Metric, { foreignKey: 'userID' });
-// Shop.hasMany(Metric, { foreignKey: 'shopID '});
-// Metric.belongsTo(Shop, { foreignKey: 'shopID' });
-// Metric.belongsTo(User, { foreignKey: 'userID' });
+Metric.sync();
+User.hasMany(Metric, { foreignKey: 'userID' });
+Shop.hasMany(Metric, { foreignKey: 'shopID '});
+Metric.belongsTo(Shop, { foreignKey: 'shopID' });
+Metric.belongsTo(User, { foreignKey: 'userID' });
 
 module.exports = Metric;

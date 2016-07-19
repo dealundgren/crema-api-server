@@ -16,6 +16,6 @@ var Shop = sequelize.define('shop', {
   photos: { type: Sequelize.ARRAY(Sequelize.STRING) }
 });
 
-Shop.sync({ force: true });
+Shop.sync();
 
 module.exports = Shop;
