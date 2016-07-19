@@ -3,27 +3,25 @@ const Metric = require('../metrics/metrics.model.js');
 const sequelize = require('../config/sequelize');
 
 
-module.exports = getShops;
+module.exports = {
+  getShops
+};
 
 
-// takes in users coordinates and zoom level
-var getShops = function(lat, long, zoom) {
-  // TODO calculate the min and max lat/long to use in the db query, based on
-  // what was passed in
-
-  var minLat;
-  var maxLat;
-  var minLong;
-  var maxLong;
-
+// takes in coordinates of map visible to user and return
+// all coffee shops in that area
+var getShops = function(sw, ne) {
+  var minLat = sw.lat;
+  var maxLat = ne.lat;
+  var minLong = sw.lng;
+  var maxLong = ne.lng;
 
   sequelize.query(`SELECT *
               FROM shops, metrics
               WHERE shops.id = metrics."shopID" AND shops.lat <= ${maxLat} AND shops.lat >= ${minLat} 
               AND shops.long <= ${maxLong} AND shops.long >= ${minLong}`)
   .then((res) => {
-    //todo: hand res to the calling function
+    return res;
   })
   .catch((err) => console.log(err) );
-
 };
