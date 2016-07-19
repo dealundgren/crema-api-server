@@ -2,11 +2,14 @@ const encryption = require('../utils/encryption');
 const User = require('../users/user.model');
 const UserCtrl = require('../users/user.controller');
 
+
 module.exports = {
   addUser
 };
 
 /***** PUBLIC *****/
+
+function login(req, res) => res.send(req.user);
 
 function addUser(req,res) {
   return encryption.hashPassword(req.body.password)
@@ -28,4 +31,10 @@ function addUser(req,res) {
         }
       });
     });
+}
+
+function endSession(req, res) {
+  req.logout(); // <~~~~~~~~~~~~ Do I need to import passport for this?
+  // <~~~~~~~~~~~~~~~~ Need to redirect user to login. but how?
+  res.send('Logged Out');
 }

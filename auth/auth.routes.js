@@ -6,8 +6,12 @@ var AuthCtrl = require('./auth.controller');
 
 // Upon user login, check if user exists, and return success with new user if so.
 AuthRouter.route('/login')
-  .post(passport.authenticate('local'), (req, res) => res.send(req.user));
+  .post(passport.authenticate('local'), AuthCtrl.login);
 
 // Upon signup, 
 AuthRouter.route('/signup')
   .post(AuthCtrl.addUser);
+
+// Upon logout
+AuthRouter.route('/logout')
+  .post(AuthCtrl.endSession);
