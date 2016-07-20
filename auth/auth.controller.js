@@ -1,15 +1,27 @@
 const encryption = require('../utils/encryption');
-const User = require('../users/user.model');
-const UserCtrl = require('../users/user.controller');
+const UserCtrl = require('../users/users.controller');
+const Promise = require("bluebird");
 
 
 module.exports = {
-  addUser
+  addUser,
+  login,
+  endSession
 };
 
 /***** PUBLIC *****/
 
-function login(req, res) => res.send(req.user);
+function login(req, res) { 
+  res.send({
+    id: req.user.id,
+    username: req.user.username,
+    fullName: req.user.fullName,
+    email: req.user.email,
+    role: req.user.role,
+    createdAt: req.user.createdAt,
+    updatedAt: req.user.updatedAt
+  });
+}
 
 function addUser(req,res) {
   return encryption.hashPassword(req.body.password)
@@ -18,7 +30,7 @@ function addUser(req,res) {
       return UserCtrl.createUser(req, res);
     })
     .then(newUser => {
-      res.login(newUser, err => {
+      req.login(newUser, err => {
         if (err) {
           console.error(err);
           res.status(500).send({ message: 'Failed to login' });
@@ -34,7 +46,6 @@ function addUser(req,res) {
 }
 
 function endSession(req, res) {
-  req.logout(); // <~~~~~~~~~~~~ Do I need to import passport for this?
-  // <~~~~~~~~~~~~~~~~ Need to redirect user to login. but how?
-  res.send('Logged Out');
+  req.logout();
+  res.sendStatus(200);
 }

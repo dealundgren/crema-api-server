@@ -1,5 +1,8 @@
+const User = require('../users/user.model');
+
 module.exports = {
-  getCurrentUser
+  getCurrentUser,
+  createUser
 };
 
 /***** PUBLIC *****/

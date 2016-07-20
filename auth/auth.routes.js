@@ -15,3 +15,5 @@ AuthRouter.route('/signup')
 // Upon logout
 AuthRouter.route('/logout')
   .post(AuthCtrl.endSession);
+
+module.exports = AuthRouter;
