@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 const sequelize = require('../config/sequelize');
 
-var Shop = sequelize.define('shop', {
+const Shop = sequelize.define('shop', {
   name: { type: Sequelize.STRING, allowNull: false },
   lat: { type: Sequelize.FLOAT, allowNull: false },
   long: { type: Sequelize.FLOAT, allowNull: false },

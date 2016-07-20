@@ -1,5 +1,5 @@
-const Shop = require('./shops.model.js');
-const Metric = require('../metrics/metrics.model.js');
+const Shop = require('./shops.model');
+const Metric = require('../metrics/metrics.model');
 const sequelize = require('../config/sequelize');
 
 
@@ -10,11 +10,11 @@ module.exports = {
 
 // takes in coordinates of map visible to user and return
 // all coffee shops in that area
-var getShops = function(sw, ne) {
-  var minLat = sw.lat;
-  var maxLat = ne.lat;
-  var minLong = sw.lng;
-  var maxLong = ne.lng;
+function getShops(sw, ne) {
+  const minLat = sw.lat;
+  const maxLat = ne.lat;
+  const minLong = sw.lng;
+  const maxLong = ne.lng;
 
   sequelize.query(`SELECT *
               FROM shops, metrics
@@ -24,4 +24,4 @@ var getShops = function(sw, ne) {
     return res;
   })
   .catch((err) => console.log(err) );
-};
+}
