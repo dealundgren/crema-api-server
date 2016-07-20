@@ -1,11 +1,12 @@
+'use strict';
+
 const supertest = require('supertest');
 const app = require('../');
 
 const server = supertest(app);
 
 describe('Users', function () {
-  let url = '/v1/users/currentuser';
-
+  const url = '/v1/users/currentuser';
   describe('GET /currentuser', function () {
 
     it('should return current user if logged in', function (done) {

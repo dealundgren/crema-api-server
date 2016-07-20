@@ -3,7 +3,6 @@ const sequelize = require('../config/sequelize');
 const Shop = require('../shops/shops.model');
 const User = require('../users/user.model');
 
-
 const Metric = sequelize.define('metric', {
   availRating: { type: Sequelize.FLOAT },
   userMessage: { type: Sequelize.STRING },
