@@ -1,8 +1,8 @@
 // Receive login, logout, and sign up routes, and call appropriate auth functions.
 
-var passport = require('passport');
-var AuthRouter = require('express').Router();
-var AuthCtrl = require('./auth.controller');
+const passport = require('passport');
+const AuthRouter = require('express').Router();
+const AuthCtrl = require('./auth.controller');
 
 // Upon user login, check if user exists, and return success with new user if so.
 AuthRouter.route('/login')

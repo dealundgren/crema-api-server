@@ -1,7 +1,5 @@
 const encryption = require('../utils/encryption');
 const UserCtrl = require('../users/users.controller');
-const Promise = require("bluebird");
-
 
 module.exports = {
   addUser,
