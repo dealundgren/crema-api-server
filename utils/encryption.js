@@ -4,7 +4,7 @@ Promise.promisifyAll(bcrypt, { context: bcrypt });
 
 module.exports = {
   hashPassword,
-  comparePassword 
+  comparePassword
 }
 
 /*********** PUBLIC *************/
