@@ -7,7 +7,8 @@ const Metric = sequelize.define('metric', {
   availRating: { type: Sequelize.FLOAT },
   userMessage: { type: Sequelize.STRING },
   userID: { type: Sequelize.INTEGER },
-  shopID: { type: Sequelize.INTEGER }
+  shopID: { type: Sequelize.INTEGER },
+  placeID: { type: Sequelize.STRING }
 });
 
 
