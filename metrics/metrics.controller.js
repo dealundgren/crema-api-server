@@ -1,4 +1,5 @@
 const Metric = require('./metrics.model');
+var cron = require('node-cron');
 
 module.exports = {
   addRating
@@ -19,3 +20,7 @@ function addRating(req, res) {
   .then(() => { res.status(200).end(); })
   .catch((err) => { console.log(err); });
 }
+
+cron.schedule('00 30 3 * * *', function(){ //run cron job at 330 am every day
+  Metric.destroy({where: {}});
+});
