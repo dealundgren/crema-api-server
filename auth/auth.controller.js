@@ -4,7 +4,8 @@ const UserCtrl = require('../users/users.controller');
 module.exports = {
   addUser,
   login,
-  endSession
+  endSession,
+  checkAuth
 };
 
 /***** PUBLIC *****/
@@ -46,4 +47,12 @@ function addUser(req,res) {
 function endSession(req, res) {
   req.logout();
   res.sendStatus(200);
+}
+
+function checkAuth(req, res, next) {
+  if (req.isAuthenticated()) {
+    next();
+  } else {
+    res.sendStatus(401);
+  }
 }
