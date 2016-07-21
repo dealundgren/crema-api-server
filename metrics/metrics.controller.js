@@ -1,5 +1,4 @@
 const Metric = require('./metrics.model');
-var cron = require('node-cron');
 
 module.exports = {
   addRating
@@ -25,21 +24,24 @@ function addRating(req, res) {
 function getRating(req, res) {
     var ratings = {};
     req.query.shops.forEach(id => {
-      ratings.shop.id = {rating: 0 count: 0};
+      ratings[id] = {rating: 0 count: 0};
       Metric.findAll({where: {placeID: id}})
       .then(function(posts) {
         var end = new Date();
         if(end.getTime() - posts.createdAt.getTime() < 7200000) { //if time in ms from 1-1-1970 is less than two hours then data is fresh enough
-          ratings.shop.id.rating += posts.availRating;
-          ratings.shop.id.count++;
+          ratings[id].rating += posts.availRating;
+          ratings[id].count++;
         }
       });
     })
-  res.send(ratings);
+    var IdRated = {}
+    for (x in ratings) {
+      if (ratings[x].count === 0) {
+        IdRated[x] = null;
+      } else {
+        IdRated[x] = ratings[x].rating / ratings[x].count;
+      }
+    }
+  res.send(IdRated);
 }
 //on the cient side if count is 0 then there are no ratings else divide rating with count for average
-
-cron.schedule('00 30 3 * * *', function(){ //run cron job at 330 am every day
-  Metric.destroy({where: {}});
-});
-
