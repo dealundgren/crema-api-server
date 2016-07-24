@@ -1,7 +1,7 @@
 const ShopRouter = require('express').Router();
 const ShopCtrl = require('./shops.controller');
 
-ShopRouter.route('/map')
-  .get(ShopCtrl.getShops);
+ShopRouter.route('/')
+  .get(ShopCtrl.get);
 
 module.exports = ShopRouter;
