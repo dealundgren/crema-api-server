@@ -10,7 +10,7 @@ module.exports = {
 
 /***** PUBLIC *****/
 
-function login(req, res) { 
+function login(req, res) {
   res.send({
     id: req.user.id,
     username: req.user.username,
