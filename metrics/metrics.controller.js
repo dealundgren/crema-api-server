@@ -1,21 +1,19 @@
 const Metric = require('./metrics.model');
 
 module.exports = {
-  addRating
+  addRating,
+  getRating
 };
 
 
 // write a POSTed rating to the DB
 function addRating(req, res) {
-
   Metric.create({
     availRating: req.body.rating,
     userMessage: req.body.message,
     userID: req.body.userId,
     shopID: req.body.shopId,
-    placeID: req.body.placeID,
-    createdAt: new Date(),
-    updatedAt: new Date()
+    placeID: req.body.placeID
   })
   .then(() => { res.status(200).end(); })
   .catch((err) => { console.log(err); });
@@ -24,7 +22,7 @@ function addRating(req, res) {
 function getRating(req, res) {
     var ratings = {};
     req.query.shops.forEach(id => {
-      ratings[id] = {rating: 0 count: 0};
+      ratings[id] = {rating: 0, count: 0};
       Metric.findAll({where: {placeID: id}})
       .then(function(posts) {
         var end = new Date();
