@@ -1,23 +1,34 @@
+const moment = require('moment');
 const Metric = require('./metrics.model');
 
 module.exports = {
   addRating,
-  getRating
+  getRating,
+  getRatingsForShopsByPlaceIds
 };
 
+/***** PUBLIC *****/
 
-// write a POSTed rating to the DB
+/**
+ * REQUEST HANDLER: Add new rating to the database
+ */
 function addRating(req, res) {
   Metric.create({
-    availRating: req.body.message,
-    userMessage: req.body.userMessage,
+    availRating: req.body.rating,
+    userMessage: req.body.message,
     userID: req.body.userID,
     placeID: req.body.placeID
   })
-  .then(() => { res.status(200).end(); })
-  .catch((err) => { console.log(err); });
+  .then(newMetric => { res.status(201).send(newMetric); })
+  .catch(err => {
+    console.error('Error posting new rating', req.body, err);
+    res.status(500).send({message: 'Error posting new rating'});
+  });
 }
 
+/**
+ * REQUEST HANDLER: Get average ratings for shops by ID's
+ */
 function getRating(req, res) {
   const promises = [];
   const ratings = {};
@@ -56,5 +67,35 @@ function getRating(req, res) {
   });
 }
 
+/**
+ * Get ratings for shops in the array, and decorate each shop with
+ * a "metric" object containing avg. rating
+ */
+function getRatingsForShopsByPlaceIds(shops) {
+  const placeIds = [];
+  const ratings = {};
+  shops.forEach(shop => placeIds.push(shop.place_id));
 
-//on the cient side if count is 0 then there are no ratings else divide rating with count for average
+  return Metric.findAll({
+    where: {
+      placeID: { $in: placeIds },
+      createdAt: { $gt: moment().subtract(1, 'h') }
+    }
+  })
+  .then(metrics => {
+    metrics.forEach(metric => {
+      ratings[metric.placeID] = ratings[metric.placeID] || { rating: 0, count: 0 };
+      ratings[metric.placeID].rating += metric.availRating;
+      ratings[metric.placeID].count++;
+    });
+
+    shops.forEach(shop => {
+      let shopMetrics = ratings[shop.place_id] || {};
+      let avgRating = shopMetrics.rating / shopMetrics.count;
+      shop.metrics = {};
+      shop.metrics.rating = !isNaN(avgRating) ? avgRating : null;
+    });
+
+    return shops;
+  })
+}
