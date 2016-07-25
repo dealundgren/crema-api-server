@@ -1,35 +1,52 @@
 const passport = require('passport');
+const JwtStrategy = require('passport-jwt').Strategy;
+const ExtractJwt = require('passport-jwt').ExtractJwt;
 const LocalStrategy = require('passport-local').Strategy;
+const config = require('./config');
 const User = require('../users/user.model');
 const compare = require('../utils/encryption').comparePassword;
 
-// Create strategy to us for local authentication calls
-passport.use(new LocalStrategy((username, password, done) => {
-  User.findOne({where: { username }})
+module.exports = {
+  authLocal
+};
+
+// Create strategy to use for jwt authentication calls
+passport.use(new JwtStrategy(
+  {
+    secretOrKey: config.secret,
+    jwtFromRequest: ExtractJwt.fromAuthHeader()
+  }, (jwt_payload, done) => {
+  User.findOne({where: { id: jwt_payload.id }})
+    .then(user => {
+      if(user) {
+        done(null, user);
+      } else {
+        done(null, false);
+      }
+    })
+    .catch(done);
+}));
+
+// Create strategy to use for local authentication calls
+function authLocal(req, res, done) {
+  console.log(req);
+  User.findOne({where: { username: req.body.username }})
     .then(user => {
       if(!user){
         done('user not found');
       } else {
-        compare(password, user.password)
+        compare(req.body.password, user.password)
           .then(match => {
             if (!match) {
               done('wrong password');
             } else {
-              done(null, user);
+              //create jwt and send along to next mdlware w/ user.
+              req.user = user;
+              done(null);
             }
           });
       }
     });
-}));
+};
 
-// Add user ID to cookie and store cookie-ID relationship
-passport.serializeUser((user, done) => {
-  done(null, user.id);
-});
 
-// Grab user info off of request, and find corresponding user in db
-passport.deserializeUser((id, done) => {
-  User.findById(id)
-    .then(user => done(null, user))
-    .catch(err => done(err));
-});

@@ -1,7 +1,7 @@
 const fetch = require('node-fetch');
 const config = require('../config/config');
 
-const GOOGLE_PLACES_URL = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=${config.googleKey}`
+const GOOGLE_PLACES_URL = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=${config.googleKey}`;
 
 module.exports = {
   get: get
