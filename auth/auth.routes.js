@@ -3,13 +3,16 @@
 const authLocal = require('../config/passport').authLocal;
 const AuthRouter = require('express').Router();
 const AuthCtrl = require('./auth.controller');
+const passport = require('passport');
 
 // Upon user login, check if user exists, and return success with new user if so.
 AuthRouter.route('/login')
   .post(authLocal, AuthCtrl.login);
 
-// Upon signup, 
 AuthRouter.route('/signup')
   .post(AuthCtrl.addUser);
+
+AuthRouter.route('/checkToken')
+  .get(passport.authenticate('jwt'), AuthCtrl.checkTokenSuccess);
 
 module.exports = AuthRouter;

@@ -90,8 +90,8 @@ function getRatingsForShopsByPlaceIds(shops) {
     });
 
     shops.forEach(shop => {
-      let shopMetrics = ratings[shop.place_id] || {};
-      let avgRating = shopMetrics.rating / shopMetrics.count;
+      var shopMetrics = ratings[shop.place_id] || {};
+      var avgRating = shopMetrics.rating / shopMetrics.count;
       shop.metrics = {};
       shop.metrics.rating = !isNaN(avgRating) ? avgRating : null;
     });

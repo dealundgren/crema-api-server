@@ -5,10 +5,17 @@ const config = require('../config/config');
 
 module.exports = {
   addUser,
-  login
+  login,
+  checkTokenSuccess
 };
 
 /***** PUBLIC *****/
+
+function checkTokenSuccess(req, res) {
+  res.send({
+    message: 'valid token'
+  });
+}
 
 function login(req, res) {
   const token = jwt.encode(req.user, config.secret);
