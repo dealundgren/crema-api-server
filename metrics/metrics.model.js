@@ -7,15 +7,13 @@ const Metric = sequelize.define('metric', {
   availRating: { type: Sequelize.FLOAT },
   userMessage: { type: Sequelize.STRING },
   userID: { type: Sequelize.INTEGER },
-  shopID: { type: Sequelize.INTEGER },
   placeID: { type: Sequelize.STRING }
 });
 
 
 Metric.sync();
-User.hasMany(Metric, { foreignKey: 'userID' });
-Shop.hasMany(Metric, { foreignKey: 'shopID '});
-Metric.belongsTo(Shop, { foreignKey: 'shopID' });
-Metric.belongsTo(User, { foreignKey: 'userID' });
+// TODO: Add relationship back when we need to relate user with their data
+// User.hasMany(Metric, { foreignKey: 'userID' });
+// Metric.belongsTo(User, { foreignKey: 'userID' });
 
 module.exports = Metric;
