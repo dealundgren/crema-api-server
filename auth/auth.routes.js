@@ -13,6 +13,6 @@ AuthRouter.route('/signup')
   .post(AuthCtrl.addUser);
 
 AuthRouter.route('/checkToken')
-  .get(passport.authenticate('jwt'), AuthCtrl.checkTokenSuccess);
+  .get(passport.authenticate('jwt', { session: false }), AuthCtrl.checkTokenSuccess);
 
 module.exports = AuthRouter;

@@ -74,6 +74,9 @@ function getRating(req, res) {
 function getRatingsForShopsByPlaceIds(shops) {
   const placeIds = [];
   const ratings = {};
+
+  console.log('Shops: ', shops);
+
   shops.forEach(shop => placeIds.push(shop.place_id));
 
   return Metric.findAll({

@@ -14,7 +14,7 @@ function get(req, res) {
   fetch(`
     ${GOOGLE_PLACES_URL}
     &location=${req.query.location}
-    &radius=2500
+    &radius=1500
     &type=cafe
     &keyword=coffee
   `)

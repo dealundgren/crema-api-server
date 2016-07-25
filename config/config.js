@@ -12,7 +12,8 @@ const config = {
     port: process.env.PORT || 80,
     db: process.env.DATABASE_URL || 'postgres://postgres@localhost/crema',
     logLevel: process.env.LOG_LEVEL || 'tiny',
-    secret: process.env.SECRET || 'Get Ready 4 a Sompop quiz!'
+    secret: process.env.SECRET || 'Get Ready 4 a Sompop quiz!',
+    googleKey: process.env.GOOGLE_API_KEY || ''
   }
 };
 
