@@ -8,6 +8,7 @@ module.exports = {
 /***** PUBLIC *****/
 
 function getCurrentUser(req, res) {
+  console.log('<~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Got here');
   if (req.user) {
     res.send(req.user);
   } else {
