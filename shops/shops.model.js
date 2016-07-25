@@ -1,6 +1,11 @@
 const Sequelize = require('sequelize');
 const sequelize = require('../config/sequelize');
 
+  /**
+   * Creates a database schema to store coffee shop information retrieved from Google Places
+   * This schema is not currently used in this repo but could be of use for future projects
+   * 
+   */
 const Shop = sequelize.define('shop', {
   name: { type: Sequelize.STRING, allowNull: false },
   lat: { type: Sequelize.FLOAT, allowNull: false },
