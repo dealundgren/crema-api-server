@@ -9,7 +9,13 @@ module.exports = {
 };
 
 /***** PUBLIC *****/
-
+  /**
+   * get - Calls the Google Places API to get coffee shop locations 
+   * @param {Request} req
+   * @param {Response} res 
+   * @return JSON array of coffee shop information, appended with 
+   * availability ratings from the Metrics table
+   */
 function get(req, res) {
   fetch(`
     ${GOOGLE_PLACES_URL}

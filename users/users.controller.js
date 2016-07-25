@@ -7,15 +7,15 @@ module.exports = {
 
 /***** PUBLIC *****/
 
-function getCurrentUser(req, res) {
-  console.log('<~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Got here');
-  if (req.user) {
-    res.send(req.user);
-  } else {
-    res.status(401).send({message: 'user is not authenticated'});
-  }
-}
 
+
+function getCurrentUser(req, res) {
+}
+  /**
+   * Add a user to the Users table.  Called by the addUser function in auth controller
+   * @param {Request} req 
+   * @param {Response} res
+   */
 function createUser(req, res) {
   return User.create({
     username: req.body.username,
