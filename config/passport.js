@@ -40,7 +40,6 @@ function authLocal(req, res, done) {
             if (!match) {
               done('wrong password');
             } else {
-              //create jwt and send along to next mdlware w/ user.
               req.user = user;
               done(null);
             }
