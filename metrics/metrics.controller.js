@@ -9,10 +9,9 @@ module.exports = {
 // write a POSTed rating to the DB
 function addRating(req, res) {
   Metric.create({
-    availRating: req.body.rating,
-    userMessage: req.body.message,
-    userID: req.body.userId,
-    shopID: req.body.shopId,
+    availRating: req.body.message,
+    userMessage: req.body.userMessage,
+    userID: req.body.userID,
     placeID: req.body.placeID
   })
   .then(() => { res.status(200).end(); })
@@ -20,26 +19,42 @@ function addRating(req, res) {
 }
 
 function getRating(req, res) {
-    var ratings = {};
-    req.query.shops.forEach(id => {
-      ratings[id] = {rating: 0, count: 0};
-      Metric.findAll({where: {placeID: id}})
-      .then(function(posts) {
-        var end = new Date();
-        if(end.getTime() - posts.createdAt.getTime() < 7200000) { //if time in ms from 1-1-1970 is less than two hours then data is fresh enough
-          ratings[id].rating += posts.availRating;
-          ratings[id].count++;
-        }
+  const promises = [];
+  const ratings = {};
+
+  // Retrieve all ratings for each id in the shops array
+  req.query.shops.forEach(id => {
+    ratings[id] = {rating: 0, count: 0};
+    const promise = Metric.findAll({where: {placeID: id}})
+      .then(posts => {
+        posts.forEach(dataSet => {
+          const end = new Date();
+          if (end.getTime() - dataSet.createdAt.getTime() < 7200000) { //if time in ms from 1-1-1970 is less than two hours then data is fresh enough
+            ratings[id].rating += dataSet.availRating;
+            ratings[id].count++;
+          }
+        })
       });
-    })
-    var IdRated = {}
-    for (x in ratings) {
-      if (ratings[x].count === 0) {
-        IdRated[x] = null;
+    promises.push(promise);
+  });
+
+  // Aggragate and average the results
+  Promise.all(promises).then(() => {
+    const IdRated = {}
+    for (var placeId in ratings) {
+      if (ratings[placeId].count === 0) {
+        IdRated[placeId] = null;
       } else {
-        IdRated[x] = ratings[x].rating / ratings[x].count;
+        IdRated[placeId] = ratings[placeId].rating / ratings[placeId].count;
       }
     }
-  res.send(IdRated);
+    res.send(IdRated);
+  })
+  .catch(err => {
+    console.error('Error fetching/calculating rating: ', err);
+    res.status(500).send({message: 'Error fetching/calculating rating'});
+  });
 }
+
+
 //on the cient side if count is 0 then there are no ratings else divide rating with count for average
