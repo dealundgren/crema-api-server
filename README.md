@@ -24,3 +24,8 @@ So we're dealing with this:
 - [ ] Making things
 - [ ] Doing things
 
+```javascript
+function booyakksha(){
+  console.log('eat my cabbage');
+}
+```
